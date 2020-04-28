@@ -10,7 +10,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async ctx => {
-    ctx.body = { message: 'Hello World' };
+    require('./cards')(ctx);
 });
 
 const port = process.env.PORT || 5000;
