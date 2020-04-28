@@ -1,0 +1,19 @@
+{
+  "name": "cah-multiplayer-server",
+  "version": "0.0.0",
+  "description": "The server side of cah-multiplayer",
+  "main": "./src/index.js",
+  "scripts": {
+    "deploy": "now",
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "now": "18.0.0"
+  },
+  "dependencies": {
+    "koa": "2.11.0"
+  }
+}s
