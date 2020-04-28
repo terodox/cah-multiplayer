@@ -23,7 +23,5 @@
     "url": "https://github.com/terodox/cah-multiplayer/issues"
   },
   "homepage": "https://github.com/terodox/cah-multiplayer#readme",
-  "dependencies": {
-    "koa": "2.11.0"
-  }
+  "dependencies": {}
 }
