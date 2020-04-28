@@ -7,7 +7,7 @@ app.use(async (ctx, next) => {
     ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     ctx.type = 'json';
     await next();
-  });
+});
 
 app.use(async ctx => {
     ctx.body = { message: 'Hello World' };

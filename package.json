@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "echo \"Build things\"",
+    "start-server": "node server/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,7 @@
     "url": "https://github.com/terodox/cah-multiplayer/issues"
   },
   "homepage": "https://github.com/terodox/cah-multiplayer#readme",
-  "dependencies": {}
+  "dependencies": {
+    "koa": "2.11.0"
+  }
 }
