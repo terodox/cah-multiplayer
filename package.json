@@ -1,0 +1,26 @@
+{
+  "name": "cah-multiplayer",
+  "version": "0.0.0",
+  "description": "A Card Against Humanity browser based multiplayer card game!",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo \"Build things\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/terodox/cah-multiplayer.git"
+  },
+  "keywords": [
+    "cah",
+    "cards",
+    "against",
+    "humanity"
+  ],
+  "author": "terodox@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/terodox/cah-multiplayer/issues"
+  },
+  "homepage": "https://github.com/terodox/cah-multiplayer#readme"
+}
