@@ -1,4 +1,4 @@
-export function cardsRoute(ctx) {
+module.exports = function cardsRoute(ctx) {
     if(ctx.requestPath === '/cards') {
         ctx.body = {
             cards: [
