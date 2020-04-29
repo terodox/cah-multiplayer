@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const route = require('koa-route');
 const mongo = require('koa-mongo')
+const koaBody = require('koa-body');
 const app = new Koa();
 
 app.use(mongo({
@@ -12,6 +13,10 @@ app.use(mongo({
     useUnifiedTopology: true,
 }));
 
+app.use(koaBody({
+    jsonLimit: '1kb'
+}));
+
 app.use(async (ctx, next) => {
     ctx.set('Access-Control-Allow-Origin', '*');
     ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -21,6 +26,8 @@ app.use(async (ctx, next) => {
 });
 
 app.use(route.get('/cards', require('./cards')));
+app.use(route.get('/cards/black/random', require('./cards-black-random')));
+app.use(route.post('/games', require('./new-game')));
 
 const port = process.env.PORT || 5000;
 app.listen(port);

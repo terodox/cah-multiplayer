@@ -25,7 +25,10 @@
   },
   "homepage": "https://github.com/terodox/cah-multiplayer#readme",
   "dependencies": {
+    "@meltwater/coerce": "0.2.1",
+    "argument-contracts": "0.7.0",
     "koa": "2.11.0",
+    "koa-body": "4.1.1",
     "koa-mongo": "1.9.1",
     "koa-route": "3.2.0"
   }
