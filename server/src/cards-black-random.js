@@ -4,4 +4,4 @@ module.exports = async function cardsRoute(ctx) {
     ctx.body = {
         text: allBlackCards[randomIndex].text
     }
-}
+};

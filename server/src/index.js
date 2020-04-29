@@ -27,7 +27,8 @@ app.use(async (ctx, next) => {
 
 app.use(route.get('/cards', require('./cards')));
 app.use(route.get('/cards/black/random', require('./cards-black-random')));
-app.use(route.post('/games', require('./new-game')));
+app.use(route.get('/games/:gameid', require('./games-get')));
+app.use(route.get('/games/:gameid/players/:playerid', require('./players-get')));
 
 const port = process.env.PORT || 5000;
 app.listen(port);

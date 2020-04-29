@@ -5,14 +5,11 @@ const Player = require('./player');
 module.exports = class Game {
     constructor({
         name,
-        maxPlayers,
-        players,
+        players =[],
     }) {
         ac.assertString(name, 'name');
-        ac.assertNumber(maxPlayers, 'maxPlayers');
 
         this.name = name;
-        this.maxPlayers = maxPlayers;
         this.players = coerceArray(players, Player, 'players should be an array of Player objects');
     }
 }
