@@ -1,5 +1,16 @@
 const Koa = require('koa');
+const route = require('koa-route');
+const mongo = require('koa-mongo')
 const app = new Koa();
+
+app.use(mongo({
+    uri: process.env.mongoDbConnectionString,
+    max: 100,
+    min: 1
+}, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+}));
 
 app.use(async (ctx, next) => {
     ctx.set('Access-Control-Allow-Origin', '*');
@@ -9,9 +20,7 @@ app.use(async (ctx, next) => {
     await next();
 });
 
-app.use(async ctx => {
-    require('./cards')(ctx);
-});
+app.use(route.get('/cards', require('./cards')));
 
 const port = process.env.PORT || 5000;
 app.listen(port);

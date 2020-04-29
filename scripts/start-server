@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+export mongoDbConnectionString=$(cat secrets)
+node server/src/index.js

@@ -1,9 +1,5 @@
-module.exports = function cardsRoute(ctx) {
-    if(ctx.requestPath === '/cards') {
-        ctx.body = {
-            cards: [
-                '1', '2'
-            ]
-        }
-    }
+module.exports = async function cardsRoute(ctx) {
+    const collection = ctx.mongo.db('cah-multiplayer').collection('games');
+    await collection.insert({ something: 'really simple' });
+    ctx.body = await collection.find().toArray()
 }
