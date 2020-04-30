@@ -10,6 +10,7 @@ module.exports = class Game {
         players = [],
         consumedWhiteCards = [],
         consumedBlackCards = [],
+        currentBlackCard = -1,
     }) {
         ac.assertString(name, 'name');
         ac.assertArrayOf(consumedWhiteCards, Number, 'consumedWhiteCards');
@@ -17,11 +18,13 @@ module.exports = class Game {
         if(!GameStatus.isValid(status)) {
             throw new TypeError(`status must be a valid GameStatus. Provided value: ${status}`);
         }
+        ac.assertNumber(currentBlackCard, 'currentBlackCard');
 
         this.name = name;
         this.status = status;
         this.players = coerceArray(players, Player, 'players should be an array of Player objects');
         this.consumedWhiteCards = consumedWhiteCards;
         this.consumedBlackCards = consumedBlackCards;
+        this.currentBlackCard = currentBlackCard;
     }
 }
