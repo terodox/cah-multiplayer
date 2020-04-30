@@ -1,9 +1,7 @@
 const Game = require('./models/game');
 const GameStatus = require('./models/game-status');
-const {
-    selectRandomBlackCard,
-    selectRandomWhiteCards,
-} = require('./card-manager');
+const cardData = require('./card-data.json');
+const { shuffle } = require('./models/deck');
 
 module.exports = async function gamesGet(ctx, gameId) {
     console.log('Patching game by id:', gameId);
@@ -27,35 +25,39 @@ module.exports = async function gamesGet(ctx, gameId) {
             if(game.status === GameStatus.STARTING_GAME) {
                 // Game initialization!
                 console.log('STARTING GAME:', game.name);
+                const indexArrayOfWhiteCards = Array.apply(null, {length: cardData.whiteCards.length}).map(Number.call, Number);
+                const whiteDeck = shuffle(indexArrayOfWhiteCards);
+                const indexArrayOfBlackCards = Array.apply(null, {length: cardData.blackCards.length}).map(Number.call, Number);
+                const blackDeck = shuffle(indexArrayOfBlackCards);
                 game.players.forEach(player => {
                     // Distribute 7 random cards to each player
-                    console.log('Consumed white cards:', game.consumedWhiteCards);
-                    player.cards = selectRandomWhiteCards(game.consumedWhiteCards, 7);
+                    console.log('White card deck length:', game.whiteCardDeck.length);
+                    const playerHand = [];
+                    for(let cardCounter = 0; cardCounter < 7; cardCounter++) {
+                        const selectedCard = whiteDeck.shift();
+                        console.log('Selected card:', selectedCard);
+                        playerHand.push(selectedCard);
+                    }
                     console.log('Distributed white cards:', player.name, player.cards);
-                    // Mark all cards as consumed
-                    game.consumedWhiteCards = [
-                        ...game.consumedWhiteCards,
-                        ...player.cards
-                    ];
+                    player.cards = playerHand;
                 });
+
                 // Select a black card
-                game.currentBlackCard = selectRandomBlackCard(game.consumedBlackCards);
+                game.currentBlackCard = blackDeck.shift();
                 console.log('Distributed black card:', game.currentBlackCard);
 
-                game.consumedWhiteCards = [
-                    ...game.consumedWhiteCards,
-                    game.currentBlackCard
-                ];
+                game.whiteCardDeck = whiteDeck;
+                game.blackCardDeck = blackDeck;
 
                 // Player[0] is selected as card tsar
                 game.players[0].isCardTsar = true;
-                console.log('elected tsar:', game.players[0].name);
+                console.log('Elected tsar:', game.players[0].name);
                 // status moves to PLAYING
                 game.status = GameStatus.PLAYING;
                 console.log('Setting game to playing status');
             }
 
-            await collection.update({
+            await collection.updateOne({
                 _id: gameFromDb._id
             },
             {
