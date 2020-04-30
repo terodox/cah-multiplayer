@@ -6,6 +6,9 @@ mkdir site
 echo "Moving to web directory"
 cd web
 
+echo "install deps"
+npm ci
+
 echo "Running web build"
 npm run build
 
