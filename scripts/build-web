@@ -6,6 +6,9 @@ mkdir site
 echo "Moving to web directory"
 cd web
 
+echo "Mustache in settings"
+MUSTACHE_VIEW="{\"API_BASE_URL\":\"${API_BASE_URL}\"}"
+echo "${MUSTACHE_VIEW}" | npx mustache - ./src/index.template.html > ./src/index.html
 echo "install deps"
 npm ci
 

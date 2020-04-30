@@ -14,5 +14,9 @@
     "@stencil/core": "^1.12.2",
     "@stencil/router": "^1.0.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "0.19.2",
+    "axios-retry": "3.1.8"
+  }
 }
