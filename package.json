@@ -4,7 +4,7 @@
   "description": "A Card Against Humanity browser based multiplayer card game!",
   "main": "index.js",
   "scripts": {
-    "build": "scripts/build-web",
+    "build-web": "scripts/build-web",
     "start-server": "scripts/start-server",
     "start-web": "cd web && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
