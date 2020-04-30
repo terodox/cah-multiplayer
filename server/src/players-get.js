@@ -50,5 +50,6 @@ module.exports = async function playersGet(ctx, gameId, playerId) {
     } catch(error) {
         console.log(error);
         ctx.status = 500;
+        //This is a comment
     }
 }
