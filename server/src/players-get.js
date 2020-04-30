@@ -28,7 +28,10 @@ module.exports = async function playersGet(ctx, gameId, playerId) {
 
         const gameFromDb = result[0];
         const game = new Game(gameFromDb);
-        if(!game.players.find(gamePlayer => gamePlayer.name === player.name)) {
+        const foundPlayer = game.players.find(gamePlayer => gamePlayer.name === player.name);
+        if(foundPlayer) {
+            ctx.body = foundPlayer
+        } else {
             const updatedPlayerArray = [
                 ...game.players,
                 player
@@ -41,8 +44,8 @@ module.exports = async function playersGet(ctx, gameId, playerId) {
                     players: updatedPlayerArray
                 }
             });
+            ctx.body = player;
         }
-        ctx.body = player;
         ctx.status = 200;
     } catch(error) {
         console.log(error);
