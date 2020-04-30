@@ -1,0 +1,11 @@
+echo "Creating site dir"
+mkdir site
+
+echo "Moving to web directory"
+cd web
+
+echo "Running web build"
+npm run build
+
+echo "List site contents"
+ls ../site
