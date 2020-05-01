@@ -11,7 +11,7 @@ export class GamePage implements ComponentInterface {
   @Prop() match: MatchResults;
 
   static get route() {
-    return '/game/:gameId';
+    return '/games/:gameId';
   }
 
   static get tagName() {

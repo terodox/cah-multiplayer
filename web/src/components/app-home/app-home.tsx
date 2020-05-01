@@ -1,5 +1,4 @@
-import { Component, State, h, Prop } from '@stencil/core';
-import { RouterHistory } from '@stencil/router';
+import { Component, State, h } from '@stencil/core';
 
 @Component({
   tag: 'app-home',
@@ -7,11 +6,10 @@ import { RouterHistory } from '@stencil/router';
   shadow: true
 })
 export class AppHome {
-  @Prop() history: RouterHistory;
   @State() gameName: string;
 
-  findGame() {
-    this.history.push(`game/${this.gameName}`, {});
+  onGameNameKeyPress(event) {
+    this.gameName = event.target.value;
   }
 
   render() {
@@ -21,11 +19,13 @@ export class AppHome {
           Enter the name of a game!
         </p>
 
-        <input type="text" placeholder="Game name" name="gameName" value={this.gameName} />
+        <input type="text" placeholder="Game name" name="gameName" onKeyUp={(event) => this.onGameNameKeyPress(event)} />
 
-        <button onClick={this.findGame}>
-          Start or Find Game
-        </button>
+        <stencil-route-link url={`/games/${this.gameName}`}>
+          <button>
+            Start or Find Game
+          </button>
+        </stencil-route-link>
 
         <stencil-route-link url='/cards'>
           <button>
