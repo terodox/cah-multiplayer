@@ -14,7 +14,7 @@ export interface BlackCard {
 
 const SAFETY = Symbol('Private Ctor');
 export class CardSourceService {
-  public baseUrl: string;
+  private baseUrl: string;
 
   private _cardDataPromise: Promise<any>;
 
@@ -39,7 +39,6 @@ export class CardSourceService {
 
   async getAllBlackCards(): Promise<Array<BlackCard>> {
     const allCards = await this._safelyGetAllCards();
-console.log('allCardsB', allCards.data.blackCards);
     return allCards.data.blackCards;
   }
 
@@ -50,7 +49,6 @@ console.log('allCardsB', allCards.data.blackCards);
 
   async getAllWhiteCards(): Promise<Array<string>> {
     const allCards = await this._safelyGetAllCards();
-console.log('allCardsW', allCards.data.whiteCards);
     return allCards.data.whiteCards;
   }
 

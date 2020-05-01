@@ -1,5 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { CardDirectoryPage } from '../card-directory-page/card-directory-page';
+import { CardSourceService } from '../../services/card-source-getter';
 import { GamePage } from '../game-page/game-page';
 
 @Component({
@@ -9,6 +10,11 @@ import { GamePage } from '../game-page/game-page';
   shadow: false,
 })
 export class AppRoot {
+  componentWillLoad() {
+    // Pre-fetch card-data to ensure a faster experience. Also warms the server if it's cold.
+    CardSourceService.getInstance().getAllWhiteCards();
+  }
+
   render() {
     return (
       <stencil-router>
