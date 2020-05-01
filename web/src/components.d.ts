@@ -5,16 +5,20 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { MatchResults, } from "@stencil/router";
+import { MatchResults, RouterHistory, } from "@stencil/router";
 export namespace Components {
     interface AppHome {
+        "history": RouterHistory;
     }
     interface AppProfile {
         "match": MatchResults;
     }
     interface AppRoot {
     }
-    interface CardDirectory {
+    interface CardDirectoryPage {
+    }
+    interface GamePage {
+        "match": MatchResults;
     }
 }
 declare global {
@@ -36,34 +40,46 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
-    interface HTMLCardDirectoryElement extends Components.CardDirectory, HTMLStencilElement {
+    interface HTMLCardDirectoryPageElement extends Components.CardDirectoryPage, HTMLStencilElement {
     }
-    var HTMLCardDirectoryElement: {
-        prototype: HTMLCardDirectoryElement;
-        new (): HTMLCardDirectoryElement;
+    var HTMLCardDirectoryPageElement: {
+        prototype: HTMLCardDirectoryPageElement;
+        new (): HTMLCardDirectoryPageElement;
+    };
+    interface HTMLGamePageElement extends Components.GamePage, HTMLStencilElement {
+    }
+    var HTMLGamePageElement: {
+        prototype: HTMLGamePageElement;
+        new (): HTMLGamePageElement;
     };
     interface HTMLElementTagNameMap {
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
-        "card-directory": HTMLCardDirectoryElement;
+        "card-directory-page": HTMLCardDirectoryPageElement;
+        "game-page": HTMLGamePageElement;
     }
 }
 declare namespace LocalJSX {
     interface AppHome {
+        "history"?: RouterHistory;
     }
     interface AppProfile {
         "match"?: MatchResults;
     }
     interface AppRoot {
     }
-    interface CardDirectory {
+    interface CardDirectoryPage {
+    }
+    interface GamePage {
+        "match"?: MatchResults;
     }
     interface IntrinsicElements {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
-        "card-directory": CardDirectory;
+        "card-directory-page": CardDirectoryPage;
+        "game-page": GamePage;
     }
 }
 export { LocalJSX as JSX };
@@ -73,7 +89,8 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
-            "card-directory": LocalJSX.CardDirectory & JSXBase.HTMLAttributes<HTMLCardDirectoryElement>;
+            "card-directory-page": LocalJSX.CardDirectoryPage & JSXBase.HTMLAttributes<HTMLCardDirectoryPageElement>;
+            "game-page": LocalJSX.GamePage & JSXBase.HTMLAttributes<HTMLGamePageElement>;
         }
     }
 }
