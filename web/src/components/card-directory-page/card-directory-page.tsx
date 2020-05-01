@@ -1,12 +1,14 @@
 import { Component, ComponentInterface, Host, h, State } from '@stencil/core';
 import { BlackCard, CardSourceService } from '../../services/card-source-getter';
 
+export const tagName = 'card-directory-page';
+export const route = '/cards';
 @Component({
-  tag: 'card-directory',
-  styleUrl: 'card-directory.scss',
+  tag: tagName,
+  styleUrl: 'card-directory-page.scss',
   shadow: true,
 })
-export class CardDirectory implements ComponentInterface {
+export class CardDirectoryPage implements ComponentInterface {
   cardSourceService: CardSourceService;
 
   @State() blackCards: Array<BlackCard>;
