@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, h, State } from '@stencil/core';
 import { CardSourceService } from '../../services/card-source-getter';
 
 @Component({
@@ -7,17 +7,34 @@ import { CardSourceService } from '../../services/card-source-getter';
   shadow: true,
 })
 export class CardDirectory implements ComponentInterface {
+  cardSourceService: CardSourceService;
 
-  componentWillLoad() {
-    CardSourceService.getInstance();
+  @State() blackCards;
+  @State() whiteCards;
+
+  async componentWillLoad() {
+    this.cardSourceService = CardSourceService.getInstance();
+    [
+      this.blackCards,
+      this.whiteCards
+    ] = await Promise.resolve([
+      this.cardSourceService.getAllBlackCards(),
+      this.cardSourceService.getAllWhiteCards()
+    ]);
   }
 
   render() {
     return (
       <Host>
-        <slot></slot>
+        <h1>White Cards</h1>
+        <ul>
+          {this.whiteCards? this.whiteCards.forEach(card => <li>${card.text}</li>) : 'Loading...'}
+        </ul>
+        <h1>Black Cards</h1>
+        <ul>
+          {this.blackCards? this.blackCards.forEach(card => <li>${card.text}</li>) : 'Loading...'}
+        </ul>
       </Host>
     );
   }
-
 }
