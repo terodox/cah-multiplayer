@@ -7,6 +7,11 @@ declare global {
   }
 }
 
+export interface BlackCard {
+  text: string;
+  pick: number;
+}
+
 const SAFETY = Symbol('Private Ctor');
 export class CardSourceService {
   public baseUrl: string;
@@ -27,24 +32,26 @@ export class CardSourceService {
     return new CardSourceService(window.appConfig.apiBaseUrl, SAFETY);
   }
 
-  async getBlackCard(cardId): Promise<number> {
+  async getBlackCard(cardId): Promise<BlackCard> {
     const allCards = await this._safelyGetAllCards();
     return allCards.blackCards[cardId];
   }
 
-  async getAllBlackCards(): Promise<Array<number>> {
+  async getAllBlackCards(): Promise<Array<BlackCard>> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.blackCards;
+console.log('allCardsB', allCards.data.blackCards);
+    return allCards.data.blackCards;
   }
 
-  async getWhiteCard(cardId): Promise<number> {
+  async getWhiteCard(cardId): Promise<string> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.whiteCards[cardId];
+    return allCards.data.whiteCards[cardId];
   }
 
-  async getAllWhiteCards(): Promise<Array<number>> {
+  async getAllWhiteCards(): Promise<Array<string>> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.whiteCards;
+console.log('allCardsW', allCards.data.whiteCards);
+    return allCards.data.whiteCards;
   }
 
   private async _safelyGetAllCards() {
@@ -55,14 +62,14 @@ export class CardSourceService {
   }
 
   private async _getAllCards() {
-    this._cardDataPromise = axios.get(`${this.baseUrl}/cards`);
+    this._cardDataPromise = axios.get(`${this.baseUrl}/cards`, {
+      responseType: 'json'
+    });
 
-    try {
-      await this._cardDataPromise;
-    } catch (error) {
+    this._cardDataPromise.catch(error => {
       console.log(error);
       this._cardDataPromise = undefined;
-    }
+    });
 
     return this._cardDataPromise;
   }

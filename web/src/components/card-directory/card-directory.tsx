@@ -1,5 +1,5 @@
 import { Component, ComponentInterface, Host, h, State } from '@stencil/core';
-import { CardSourceService } from '../../services/card-source-getter';
+import { BlackCard, CardSourceService } from '../../services/card-source-getter';
 
 @Component({
   tag: 'card-directory',
@@ -9,32 +9,46 @@ import { CardSourceService } from '../../services/card-source-getter';
 export class CardDirectory implements ComponentInterface {
   cardSourceService: CardSourceService;
 
-  @State() blackCards;
-  @State() whiteCards;
+  @State() blackCards: Array<BlackCard>;
+  @State() whiteCards: Array<string>;
 
   async componentWillLoad() {
     this.cardSourceService = CardSourceService.getInstance();
-    [
-      this.blackCards,
-      this.whiteCards
-    ] = await Promise.resolve([
+    const [
+      blackCards,
+      whiteCards
+    ] = await Promise.all([
       this.cardSourceService.getAllBlackCards(),
       this.cardSourceService.getAllWhiteCards()
     ]);
+
+    this.blackCards = blackCards;
+    this.whiteCards = whiteCards;
   }
 
   render() {
-    return (
-      <Host>
-        <h1>White Cards</h1>
-        <ul>
-          {this.whiteCards? this.whiteCards.forEach(card => <li>${card.text}</li>) : 'Loading...'}
-        </ul>
-        <h1>Black Cards</h1>
-        <ul>
-          {this.blackCards? this.blackCards.forEach(card => <li>${card.text}</li>) : 'Loading...'}
-        </ul>
-      </Host>
-    );
+    console.log(this.whiteCards, 'this.whiteCards');
+    console.log(this.blackCards, 'this.blackCards');
+
+    if(this.whiteCards && this.blackCards) {
+      return (
+        <Host>
+          <h1>White Cards</h1>
+          <ul>
+            {this.whiteCards.map(card => <li>{card}</li>)}
+          </ul>
+          <h1>Black Cards</h1>
+          <ul>
+            {this.blackCards.map(card => <li>Pick {card.pick} -- {card.text}</li>)}
+          </ul>
+        </Host>
+      );
+    } else {
+      return (
+        <Host>
+          Loading...
+        </Host>
+      )
+    }
   }
 }
