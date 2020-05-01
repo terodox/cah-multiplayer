@@ -1,0 +1,16 @@
+:host {
+  display: inline-block;
+}
+
+.black-card div.card-header {
+  flex: 1;
+}
+
+.black-card div.card-footer {
+  text-align: right;
+}
+
+div.card.black-card {
+  background-color: #222;
+  color: #EEE;
+}

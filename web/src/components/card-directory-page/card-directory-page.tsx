@@ -4,7 +4,8 @@ import { BlackCard, CardSourceService } from '../../services/card-source-getter'
 @Component({
   tag: 'card-directory-page',
   styleUrl: 'card-directory-page.scss',
-  shadow: true,
+  scoped: true,
+  shadow: false,
 })
 export class CardDirectoryPage implements ComponentInterface {
   cardSourceService: CardSourceService;
@@ -42,13 +43,13 @@ export class CardDirectoryPage implements ComponentInterface {
       return (
         <Host>
           <h1>White Cards</h1>
-          <ul>
-            {this.whiteCards.map(card => <li>{card}</li>)}
-          </ul>
+          <div class="card-container">
+            {this.whiteCards.map(cardText => <white-card text={cardText}></white-card>)}
+          </div>
           <h1>Black Cards</h1>
-          <ul>
-            {this.blackCards.map(card => <li>Pick {card.pick} -- {card.text}</li>)}
-          </ul>
+          <div class="card-container">
+            {this.blackCards.map((card: any) => <black-card card={card}></black-card>)}
+          </div>
         </Host>
       );
     } else {

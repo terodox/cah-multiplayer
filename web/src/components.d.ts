@@ -6,6 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { MatchResults, } from "@stencil/router";
+import { BlackCard, } from "./services/card-source-getter";
 export namespace Components {
     interface AppHome {
     }
@@ -14,10 +15,17 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface BlackCard {
+        "card": BlackCard;
+    }
     interface CardDirectoryPage {
     }
     interface GamePage {
         "match": MatchResults;
+    }
+    interface WhiteCard {
+        "selected": boolean;
+        "text": string;
     }
 }
 declare global {
@@ -39,6 +47,12 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLBlackCardElement extends Components.BlackCard, HTMLStencilElement {
+    }
+    var HTMLBlackCardElement: {
+        prototype: HTMLBlackCardElement;
+        new (): HTMLBlackCardElement;
+    };
     interface HTMLCardDirectoryPageElement extends Components.CardDirectoryPage, HTMLStencilElement {
     }
     var HTMLCardDirectoryPageElement: {
@@ -51,12 +65,20 @@ declare global {
         prototype: HTMLGamePageElement;
         new (): HTMLGamePageElement;
     };
+    interface HTMLWhiteCardElement extends Components.WhiteCard, HTMLStencilElement {
+    }
+    var HTMLWhiteCardElement: {
+        prototype: HTMLWhiteCardElement;
+        new (): HTMLWhiteCardElement;
+    };
     interface HTMLElementTagNameMap {
         "app-home": HTMLAppHomeElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
+        "black-card": HTMLBlackCardElement;
         "card-directory-page": HTMLCardDirectoryPageElement;
         "game-page": HTMLGamePageElement;
+        "white-card": HTMLWhiteCardElement;
     }
 }
 declare namespace LocalJSX {
@@ -67,17 +89,26 @@ declare namespace LocalJSX {
     }
     interface AppRoot {
     }
+    interface BlackCard {
+        "card"?: BlackCard;
+    }
     interface CardDirectoryPage {
     }
     interface GamePage {
         "match"?: MatchResults;
     }
+    interface WhiteCard {
+        "selected"?: boolean;
+        "text"?: string;
+    }
     interface IntrinsicElements {
         "app-home": AppHome;
         "app-profile": AppProfile;
         "app-root": AppRoot;
+        "black-card": BlackCard;
         "card-directory-page": CardDirectoryPage;
         "game-page": GamePage;
+        "white-card": WhiteCard;
     }
 }
 export { LocalJSX as JSX };
@@ -87,8 +118,10 @@ declare module "@stencil/core" {
             "app-home": LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "black-card": LocalJSX.BlackCard & JSXBase.HTMLAttributes<HTMLBlackCardElement>;
             "card-directory-page": LocalJSX.CardDirectoryPage & JSXBase.HTMLAttributes<HTMLCardDirectoryPageElement>;
             "game-page": LocalJSX.GamePage & JSXBase.HTMLAttributes<HTMLGamePageElement>;
+            "white-card": LocalJSX.WhiteCard & JSXBase.HTMLAttributes<HTMLWhiteCardElement>;
         }
     }
 }

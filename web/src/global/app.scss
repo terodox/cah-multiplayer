@@ -1,0 +1,27 @@
+/*
+  Global App CSS
+  ----------------------
+  Use this file for styles that should be applied to all components.
+  For example, "font-family" within the "body" selector is a CSS property
+  most apps will want applied to all components.
+
+  Any global CSS variables should also be applied here.
+*/
+
+:root {
+  --playing-card-base-width: 180px;
+  --playing-card-base-height: 280px;
+}
+
+@media(max-width: 600px) {
+  :root {
+    --playing-card-base-width: 100vw;
+    --playing-card-base-height: auto;
+  }
+}
+
+.card {
+  min-height: var(--playing-card-base-height);
+  width: var(--playing-card-base-width);
+  border-radius: 10px;
+}

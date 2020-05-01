@@ -4,8 +4,9 @@ import { GamePage } from '../game-page/game-page';
 
 @Component({
   tag: 'app-root',
-  styleUrl: 'app-root.css',
-  shadow: true
+  styleUrl: 'app-root.scss',
+  scoped: true,
+  shadow: false,
 })
 export class AppRoot {
   render() {

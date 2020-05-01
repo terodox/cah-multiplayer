@@ -1,0 +1,7 @@
+white-card {
+  display: inline-block;
+}
+
+white-card.selected {
+    box-shadow: inset 0 0 30px #5b94ff;
+}
