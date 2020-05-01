@@ -1,4 +1,5 @@
-import { Component, h } from '@stencil/core';
+import { Component, State, h, Prop } from '@stencil/core';
+import { RouterHistory } from '@stencil/router';
 
 @Component({
   tag: 'app-home',
@@ -6,16 +7,25 @@ import { Component, h } from '@stencil/core';
   shadow: true
 })
 export class AppHome {
+  @Prop() history: RouterHistory;
+  @State() gameName: string;
+
+  findGame() {
+    this.history.push(`game/${this.gameName}`, {});
+  }
 
   render() {
     return (
       <div class='app-home'>
         <p>
-          Welcome to the Stencil App Starter.
-          You can use this starter to build entire apps all with
-          web components using Stencil!
-          Check out our docs on <a href='https://stenciljs.com'>stenciljs.com</a> to get started.
+          Enter the name of a game!
         </p>
+
+        <input type="text" placeholder="Game name" name="gameName" value={this.gameName} />
+
+        <button onClick={this.findGame}>
+          Start or Find Game
+        </button>
 
         <stencil-route-link url='/cards'>
           <button>
