@@ -23,10 +23,10 @@ export class AppRoot {
       <stencil-router>
         <stencil-route-switch scrollTopOffset={0}>
           <stencil-route url='/' component='app-home' exact={true} />
+          <stencil-route url={MainGamePage.route} component={MainGamePage.tagName} />
           <stencil-route url={CardDirectoryPage.route} component={CardDirectoryPage.tagName} />
           <stencil-route url={PlayerPage.route} component={PlayerPage.tagName} />
           <stencil-route url={GameLobbyPage.route} component={GameLobbyPage.tagName} />
-          <stencil-route url={MainGamePage.route} component={MainGamePage.tagName} />
           <stencil-route url={GamePage.route} component={GamePage.tagName} />
         </stencil-route-switch>
       </stencil-router>

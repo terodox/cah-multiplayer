@@ -3,10 +3,33 @@
   height: 100%;
 }
 
-game-lobby-page {
+main-game-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
+
+  .player-cards {
+    display: flex;
+    flex-direction: row;
+
+    white-card {
+      display: inline-block;
+    }
+  }
+}
+
+@media(max-width: 600px) {
+  main-game-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .player-cards {
+      display: flex;
+      flex-direction: column;
+      white-card {
+        display: inline-block;
+      }
+    }
+  }
 }

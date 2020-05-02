@@ -36,31 +36,32 @@ export class CardSourceService {
     return _instance;
   }
 
-  async getBlackCard(cardId): Promise<BlackCard> {
+  async getBlackCard(cardId: number): Promise<BlackCard> {
     const allCards = await this._safelyGetAllCards();
+console.log('Total black cards:', allCards);
     return allCards.blackCards[cardId];
   }
 
   async getAllBlackCards(): Promise<Array<BlackCard>> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.data.blackCards;
+    return allCards.blackCards;
   }
 
-  async getWhiteCard(cardId): Promise<string> {
+  async getWhiteCard(cardId: number): Promise<string> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.data.whiteCards[cardId];
+    return allCards.whiteCards[cardId];
   }
 
   async getAllWhiteCards(): Promise<Array<string>> {
     const allCards = await this._safelyGetAllCards();
-    return allCards.data.whiteCards;
+    return allCards.whiteCards;
   }
 
   private async _safelyGetAllCards() {
     if(this._cardDataPromise) {
-      return this._cardDataPromise;
+      return this._cardDataPromise.then(response => response.data);
     }
-    return this._getAllCards();
+    return this._getAllCards().then(response => response.data);
   }
 
   private async _getAllCards() {
@@ -71,6 +72,7 @@ export class CardSourceService {
     this._cardDataPromise.catch(error => {
       console.log(error);
       this._cardDataPromise = undefined;
+      throw error;
     });
 
     return this._cardDataPromise;

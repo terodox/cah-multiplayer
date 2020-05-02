@@ -14,6 +14,12 @@ module.exports = async function gamesGet(ctx, gameId) {
         if(result.length === 0) {
             ctx.status = 404;
             return;
+        } else if (result[0].status !== GameStatus.WAITING_FOR_PLAYERS) {
+            ctx.status = 400;
+            ctx.body = {
+                message: 'Game has already been started'
+            };
+            return;
         } else {
             const gameFromDb = result[0];
             let patchBody = ctx.request.body;

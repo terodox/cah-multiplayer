@@ -20,7 +20,7 @@ export class GameRepository {
     axiosRetry(axios);
   }
 
-  static getInstance() {
+  static getInstance(): GameRepository {
     if(!_instance) {
       _instance = new GameRepository(window.appConfig.apiBaseUrl, SAFETY);
     }

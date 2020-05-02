@@ -3,6 +3,7 @@ import { MatchResults, RouterHistory } from '@stencil/router';
 import { GameRepository } from '../../services/game-repository';
 import { Game } from '../../models/game';
 import { getAvatar } from '../../services/avatar-builder';
+import { MainGamePage } from '../main-game-page/main-game-page';
 
 @Component({
   tag: 'game-lobby-page',
@@ -38,8 +39,12 @@ export class GameLobbyPage implements ComponentInterface {
   }
 
   async startGame() {
-    await GameRepository.getInstance()
-      .startGame(this.gameId);
+    await GameRepository.getInstance().startGame();
+
+    const gameId = (await GameRepository.getInstance().getCurrentGame()).name;
+    const playerId = GameRepository.getInstance().getCurrentPlayer().name;
+
+    this.history.push(MainGamePage.getRoute(gameId, playerId), {});
   }
 
   render() {
