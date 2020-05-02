@@ -52,6 +52,8 @@ export class MainGamePage implements ComponentInterface {
       this.player.cards.map(async cardId => await this.cardSourceService.getWhiteCard(cardId))
     );
     console.log('this.playerCards', this.playerCards);
+    this.selectedCard = await this.cardSourceService.getWhiteCard(this.player.selectedCard);
+    console.log(this.player.selectedCard, this.selectedCard);
   }
 
   selectCard(card) {

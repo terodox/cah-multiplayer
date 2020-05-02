@@ -46,8 +46,10 @@ module.exports = async function playersGet(ctx, gameId, playerId) {
         if(foundPlayer) {
             const updatedPlayer = new Player({
                 ...foundPlayer,
-                patchBody
+                ...patchBody
             });
+
+            console.log('Patched player', updatedPlayer);
 
             await collection.updateOne({
                 _id: gameFromDb._id,
