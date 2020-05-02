@@ -8,13 +8,21 @@ main-game-page {
   flex-direction: column;
   height: 100vh;
 
-  .player-cards {
-    display: flex;
-    flex-direction: row;
+  .player-card-container {
+    margin-top: 16px;
 
-    white-card {
-      display: inline-block;
+    .player-cards {
+      display: flex;
+      flex-direction: row;
+
+      white-card {
+        display: inline-block;
+      }
     }
+  }
+
+  button {
+    margin: 16px 0;
   }
 }
 
@@ -24,11 +32,15 @@ main-game-page {
     flex-direction: column;
     height: 100vh;
 
-    .player-cards {
-      display: flex;
-      flex-direction: column;
-      white-card {
-        display: inline-block;
+    .player-card-container {
+      margin-top: 16px;
+
+      .player-cards {
+        display: flex;
+        flex-direction: column;
+        white-card {
+          display: inline-block;
+        }
       }
     }
   }

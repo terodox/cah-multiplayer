@@ -20,6 +20,7 @@ export class MainGamePage implements ComponentInterface {
   @State() gameId: string;
   @State() playerId: string;
   @State() playerCards: Array<string>;
+  @State() selectedCard: string;
 
   private cardSourceService: CardSourceService;
 
@@ -53,6 +54,12 @@ export class MainGamePage implements ComponentInterface {
     console.log('this.playerCards', this.playerCards);
   }
 
+  selectCard(card) {
+    this.selectedCard = card;
+    const cardIndex = this.playerCards.indexOf(card);
+    //GameRepository.getInstance().selectedPlayerCard();
+  }
+
   render() {
     if(this.game) {
       return (<Host>
@@ -60,8 +67,21 @@ export class MainGamePage implements ComponentInterface {
         <div class="current-black-card">
           <black-card card={this.blackCard as any}></black-card>
         </div>
-        <div class="player-cards">
-          {this.playerCards.map(whiteCard => <white-card text={whiteCard}></white-card>)}
+        <div class="player-card-container">
+          <h2>Your Cards</h2>
+          { this.selectCard ?
+            <button class="btn primary-btn">Use this card</button>
+            : '' }
+          <div class="player-cards">
+            {this.playerCards.map(whiteCard => <white-card
+              text={whiteCard}
+              onClick={() => this.selectCard(whiteCard)}
+              selected={this.selectedCard === whiteCard}
+            ></white-card>)}
+          </div>
+          { this.selectCard ?
+            <button class="btn primary-btn">Use this card</button>
+            : '' }
         </div>
       </Host>);
     } else {
