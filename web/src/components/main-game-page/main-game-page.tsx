@@ -3,7 +3,8 @@ import { MatchResults, RouterHistory } from '@stencil/router';
 import { GameRepository } from '../../services/game-repository';
 import { Game } from '../../models/game';
 import { CardSourceService, BlackCard } from '../../services/card-source-getter';
-import { Player } from '../../models/player';
+import { Player, NONE } from '../../models/player';
+import { GameStatus } from '../../models/game-status';
 
 @Component({
   tag: 'main-game-page',
@@ -21,6 +22,7 @@ export class MainGamePage implements ComponentInterface {
   @State() playerId: string;
   @State() playerCards: Array<string>;
   @State() selectedCard: string;
+  @State() otherPeopleSelections: Array<string> = [];
 
   private cardSourceService: CardSourceService;
 
@@ -40,10 +42,7 @@ export class MainGamePage implements ComponentInterface {
     this.cardSourceService = CardSourceService.getInstance();
   }
 
-  async componentWillLoad() {
-    console.log(this.match.params);
-    this.gameId = this.match.params.gameId;
-    this.playerId = this.match.params.playerId;
+  private async _refreshGameState() {
     this.game = await GameRepository.getInstance().getOrAddGame(this.gameId);
     this.player = this.game.players.find(player => player.name === this.playerId);
     this.blackCard = await this.cardSourceService.getBlackCard(this.game.currentBlackCard);
@@ -54,26 +53,53 @@ export class MainGamePage implements ComponentInterface {
     console.log('this.playerCards', this.playerCards);
     this.selectedCard = await this.cardSourceService.getWhiteCard(this.player.selectedCard);
     console.log(this.player.selectedCard, this.selectedCard);
+
+    this.otherPeopleSelections = await Promise.all(
+      this.game.players
+        .filter(player => player.selectedCard !== NONE)
+        .map(async player => await this.cardSourceService.getWhiteCard(player.selectedCard))
+    );
   }
 
-  selectCard(card) {
+  async componentWillLoad() {
+    console.log(this.match.params);
+    this.gameId = this.match.params.gameId;
+    this.playerId = this.match.params.playerId;
+    await this._refreshGameState();
+  }
+
+  async selectCard(card) {
     this.selectedCard = card;
     const cardIndex = this.playerCards.indexOf(card);
-    //GameRepository.getInstance().selectedPlayerCard();
+    const cardId = this.player.cards[cardIndex];
+    await GameRepository.getInstance().setSelectedPlayerCard({
+      gameId: this.gameId,
+      playerId: this.playerId,
+      selectedCard: cardId
+    });
+
+    console.log('Selected card updated:', cardId);
+    await this._refreshGameState();
   }
 
   render() {
     if(this.game) {
       return (<Host>
         <h1>{this.gameId}</h1>
-        <div class="current-black-card">
+        <div class="others-cards-container">
           <black-card card={this.blackCard as any}></black-card>
+          <div class="other-people-selections">
+            {
+              this.game.status === GameStatus.WAITING_FOR_CARDS ?
+                <white-card text={`Waiting for player selections. Total submitted: ${this.otherPeopleSelections.length}`}></white-card>
+              :
+              this.otherPeopleSelections.map(card => card ?
+                <white-card text={card}></white-card> : '')
+            }
+          </div>
         </div>
         <div class="player-card-container">
           <h2>Your Cards</h2>
-          { this.selectCard ?
-            <button class="btn primary-btn">Use this card</button>
-            : '' }
           <div class="player-cards">
             {this.playerCards.map(whiteCard => <white-card
               text={whiteCard}
@@ -81,9 +107,6 @@ export class MainGamePage implements ComponentInterface {
               selected={this.selectedCard === whiteCard}
             ></white-card>)}
           </div>
-          { this.selectCard ?
-            <button class="btn primary-btn">Use this card</button>
-            : '' }
         </div>
       </Host>);
     } else {

@@ -8,6 +8,11 @@ main-game-page {
   flex-direction: column;
   height: 100vh;
 
+  .others-cards-container {
+    display: flex;
+    flex-direction: row;
+  }
+
   .player-card-container {
     margin-top: 16px;
 
@@ -31,6 +36,11 @@ main-game-page {
     display: flex;
     flex-direction: column;
     height: 100vh;
+
+    .others-cards-container {
+      display: flex;
+      flex-direction: column;
+    }
 
     .player-card-container {
       margin-top: 16px;

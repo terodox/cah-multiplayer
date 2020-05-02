@@ -62,7 +62,7 @@ module.exports = async function gamesGet(ctx, gameId) {
                 game.players[0].isCardTsar = true;
                 console.log('Elected tsar:', game.players[0].name);
                 // status moves to PLAYING
-                game.status = GameStatus.PLAYING;
+                game.status = GameStatus.WAITING_FOR_CARDS;
                 console.log('Setting game to playing status');
             }
 

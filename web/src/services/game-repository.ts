@@ -55,6 +55,17 @@ export class GameRepository {
     throw new Error('Player has not been set yet');
   }
 
+  async setSelectedPlayerCard({ gameId, playerId, selectedCard}) {
+    await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/players/${encodeURIComponent(playerId)}`, {
+      selectedCard: selectedCard
+    }, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   async startGame() {
     await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(this._currentGameId)}`, {
       status: 'STARTING_GAME'
