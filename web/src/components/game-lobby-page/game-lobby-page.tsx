@@ -33,11 +33,13 @@ export class GameLobbyPage implements ComponentInterface {
     console.log('Got game?', this.game);
   }
 
+  async checkForMorePlayers() {
+    this.game = await GameRepository.getInstance().getCurrentGame();
+  }
+
   async startGame() {
     await GameRepository.getInstance()
       .startGame(this.gameId);
-
-    //this.history.push();
   }
 
   render() {
@@ -59,8 +61,11 @@ export class GameLobbyPage implements ComponentInterface {
           <img src="../../assets/loader.gif" />
         }
 
-        <button class="btn primary-btn" onClick={() => this.startGame()}>
+        <button class="btn btn-primary" onClick={() => this.startGame()}>
           Start Game!
+        </button>
+        <button class="btn" onClick={() => this.checkForMorePlayers()}>
+          Check for more players
         </button>
       </Host>
     );
