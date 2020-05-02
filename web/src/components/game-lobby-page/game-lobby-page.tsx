@@ -2,6 +2,7 @@ import { Component, ComponentInterface, Host, h, Prop, State } from '@stencil/co
 import { MatchResults, RouterHistory } from '@stencil/router';
 import { GameRepository } from '../../services/game-repository';
 import { Game } from '../../models/game';
+import { getAvatar } from '../../services/avatar-builder';
 
 @Component({
   tag: 'game-lobby-page',
@@ -26,8 +27,10 @@ export class GameLobbyPage implements ComponentInterface {
     return 'game-lobby-page';
   }
 
-  async componentDidRender() {
-    this.game = await GameRepository.getInstance().getOrAddGame(this.gameId);
+  async componentDidLoad() {
+    console.log('In lobby for:', this.gameId);
+    this.game = await GameRepository.getInstance().getCurrentGame();
+    console.log('Got game?', this.game);
   }
 
   async startGame() {
@@ -38,15 +41,23 @@ export class GameLobbyPage implements ComponentInterface {
   }
 
   render() {
+    console.log('Players', this.game.players);
     return (
       <Host>
         <h1>{this.gameId}</h1>
         <h3>Waiting for additional players...</h3>
-        <ul class="player-list">
-          {this.game.players.forEach(player => {
-            <li>{player.name}</li>
-          })}
-        </ul>
+        { this.game ?
+          <ul class="player-list">
+            {this.game.players.map(player => <li>
+              <h4>
+                <img class="avatar" src={getAvatar(36, player.name)} />
+                {player.name}
+              </h4>
+            </li>)}
+          </ul>
+          :
+          <img src="../../assets/loader.gif" />
+        }
 
         <button class="btn primary-btn" onClick={() => this.startGame()}>
           Start Game!

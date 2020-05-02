@@ -16,7 +16,10 @@ module.exports = async function gamesGet(ctx, gameId) {
             return;
         } else {
             const gameFromDb = result[0];
-            const patchBody = JSON.parse(ctx.request.body);
+            let patchBody = ctx.request.body;
+            if(typeof ctx.request.body === 'string') {
+                patchBody = JSON.parse(ctx.request.body);
+            }
             const game = new Game({
                 ...gameFromDb,
                 ...patchBody

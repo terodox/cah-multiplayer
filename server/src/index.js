@@ -2,8 +2,10 @@ const Koa = require('koa');
 const route = require('koa-route');
 const mongo = require('koa-mongo')
 const koaBody = require('koa-body');
+const cors = require('koa2-cors');
 const app = new Koa();
 
+app.use(cors());
 app.use(mongo({
     uri: process.env.mongoDbConnectionString,
     max: 100,
@@ -18,9 +20,6 @@ app.use(koaBody({
 }));
 
 app.use(async (ctx, next) => {
-    ctx.set('Access-Control-Allow-Origin', '*');
-    ctx.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    ctx.set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
     ctx.type = 'json';
     await next();
 });

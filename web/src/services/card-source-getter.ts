@@ -13,6 +13,7 @@ export interface BlackCard {
 }
 
 const SAFETY = Symbol('Private Ctor');
+let _instance;
 export class CardSourceService {
   private baseUrl: string;
 
@@ -29,7 +30,10 @@ export class CardSourceService {
   }
 
   static getInstance() {
-    return new CardSourceService(window.appConfig.apiBaseUrl, SAFETY);
+    if(!_instance) {
+      _instance = new CardSourceService(window.appConfig.apiBaseUrl, SAFETY);
+    }
+    return _instance;
   }
 
   async getBlackCard(cardId): Promise<BlackCard> {
