@@ -6,7 +6,7 @@ import { Player } from './player';
 export class Game {
     public name: string;
     public status: string;
-    public players: Player;
+    public players: Array<Player>;
     public whiteCardDeck: Array<number>;
     public blackCardDeck: Array<number>;
     public currentBlackCard: number;

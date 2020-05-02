@@ -1,5 +1,7 @@
 import { Component, ComponentInterface, Host, h, Prop, State } from '@stencil/core';
-import { MatchResults } from '@stencil/router';
+import { MatchResults, RouterHistory } from '@stencil/router';
+import { GameRepository } from '../../services/game-repository';
+import { PlayerPage } from '../player-page/player-page';
 
 @Component({
   tag: 'game-page',
@@ -7,8 +9,10 @@ import { MatchResults } from '@stencil/router';
   shadow: false,
 })
 export class GamePage implements ComponentInterface {
-  @State() gameId: string;
+  @Prop() history: RouterHistory;
   @Prop() match: MatchResults;
+
+  @State() gameId: string;
 
   static get route() {
     return '/games/:gameId';
@@ -20,6 +24,14 @@ export class GamePage implements ComponentInterface {
 
   componentWillLoad() {
     this.gameId = this.match.params.gameId;
+    GameRepository.getInstance()
+      .getOrAddGame(this.gameId)
+      .then(game => {
+        console.log('Game found!', game);
+        const playerRoute = PlayerPage.getRoute(game.name);
+        console.log('Navigating to:', playerRoute);
+        this.history.push(playerRoute, {});
+      });
   }
 
   render() {

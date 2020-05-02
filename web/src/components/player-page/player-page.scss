@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+player-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .form-group {
+    width: 250px;
+
+    button {
+      margin: .3rem 0;
+    }
+  }
+
+  .game-name {
+    font-style: italic;
+    font-family: "Arial Black";
+  }
+}
