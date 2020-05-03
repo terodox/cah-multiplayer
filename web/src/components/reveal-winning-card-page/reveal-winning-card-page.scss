@@ -10,6 +10,11 @@ reveal-winning-card-page {
   justify-content: center;
   height: 100vh;
 
+  .winning-card {
+    display: flex;
+    flex-direction: row;
+  }
+
   .player-list {
     margin: 0;
     padding: 0;

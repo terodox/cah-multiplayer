@@ -39,7 +39,7 @@ export class PlayerPage implements ComponentInterface {
       .getOrAddPlayer(this.gameId, this.playerNameInputElement.value)
       .then((player) => {
         console.log('Player added:', player);
-        const lobbyRoute = GameLobbyPage.getRoute(this.gameId);
+        const lobbyRoute = GameLobbyPage.getRoute(this.gameId, player.name);
         console.log('Navigating to:', lobbyRoute);
         this.history.push(lobbyRoute, {});
       });

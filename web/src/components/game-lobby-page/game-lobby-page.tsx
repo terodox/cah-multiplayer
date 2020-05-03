@@ -4,6 +4,7 @@ import { GameRepository } from '../../services/game-repository';
 import { Game } from '../../models/game';
 import { getAvatar } from '../../services/avatar-builder';
 import { MainGamePage } from '../main-game-page/main-game-page';
+import { GameStatus } from '../../models/game-status';
 
 @Component({
   tag: 'game-lobby-page',
@@ -15,40 +16,51 @@ export class GameLobbyPage implements ComponentInterface {
   @Prop() match: MatchResults;
 
   @State() gameId: string;
+  @State() playerId: string;
   @State() game: Game | undefined;
 
+  private _checkTimer: any;
+
   static get route() {
-    return `/games/:gameId/lobby`;
+    return `/games/:gameId/players/:playerId/lobby`;
   }
-  static getRoute(gameId) {
-    return `/games/${encodeURIComponent(gameId)}/lobby`;
+  static getRoute(gameId, playerId) {
+    return `/games/${encodeURIComponent(gameId)}/players/${encodeURIComponent(playerId)}/lobby`;
   }
 
   static get tagName() {
     return 'game-lobby-page';
   }
 
-  async componentDidLoad() {
-    console.log('In lobby for:', this.gameId);
-    this.game = await GameRepository.getInstance().getCurrentGame();
-    console.log('Got game?', this.game);
+  componentWillLoad() {
+    console.log('GameLobbyPage');
+    this.gameId = this.match.params.gameId;
+    this.playerId = this.match.params.playerId;
+    GameRepository.getInstance().getOrAddGame(this.gameId)
+      .then(game => {
+        this.game = game;
+      });
   }
 
   async checkForMorePlayers() {
-    this.game = await GameRepository.getInstance().getCurrentGame();
+    this.game = await GameRepository.getInstance().getOrAddGame(this.gameId);
+    if(this.game.status === GameStatus.WAITING_FOR_CARDS) {
+      this.history.push(MainGamePage.getRoute(this.gameId, this.playerId), {});
+    }
   }
 
   async startGame() {
     await GameRepository.getInstance().startGame();
 
-    const gameId = (await GameRepository.getInstance().getCurrentGame()).name;
-    const playerId = GameRepository.getInstance().getCurrentPlayer().name;
-
-    this.history.push(MainGamePage.getRoute(gameId, playerId), {});
+    this.history.push(MainGamePage.getRoute(this.gameId, this.playerId), {});
   }
 
   render() {
     console.log('Players', this.game.players);
+
+    clearTimeout(this._checkTimer);
+    this._checkTimer = setTimeout(() => this.checkForMorePlayers(), 5000);
+
     return (
       <Host>
         <h1>{this.gameId}</h1>

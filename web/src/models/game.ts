@@ -10,6 +10,7 @@ export class Game {
     public whiteCardDeck: Array<number>;
     public blackCardDeck: Array<number>;
     public currentBlackCard: number;
+    public lastBlackCard: number;
     public lastTsarSelection: number;
     public lastWinnerPlayerIndex: number;
 
@@ -20,6 +21,7 @@ export class Game {
         currentBlackCard = -1,
         whiteCardDeck = [],
         blackCardDeck = [],
+        lastBlackCard = -1,
         lastTsarSelection = -1,
         lastWinnerPlayerIndex = -1,
     }) {
@@ -28,6 +30,7 @@ export class Game {
             throw new TypeError(`status must be a valid GameStatus. Provided value: ${status}`);
         }
         ac.assertNumber(currentBlackCard, 'currentBlackCard');
+        ac.assertNumber(lastBlackCard, 'lastBlackCard');
         ac.assertNumber(lastTsarSelection, 'lastTsarSelection');
         ac.assertNumber(lastWinnerPlayerIndex, 'lastWinnerPlayerIndex');
         ac.assertArrayOf(whiteCardDeck, Number, 'whiteCardDeck');
@@ -39,6 +42,7 @@ export class Game {
         this.whiteCardDeck = whiteCardDeck;
         this.blackCardDeck = blackCardDeck;
         this.currentBlackCard = currentBlackCard;
+        this.lastBlackCard = lastBlackCard;
         this.lastTsarSelection = lastTsarSelection;
         this.lastWinnerPlayerIndex = lastWinnerPlayerIndex;
     }

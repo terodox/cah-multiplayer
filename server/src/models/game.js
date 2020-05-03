@@ -11,6 +11,7 @@ module.exports = class Game {
         currentBlackCard = -1,
         whiteCardDeck = [],
         blackCardDeck = [],
+        lastBlackCard = -1,
         lastTsarSelection = -1,
         lastWinnerPlayerIndex = -1
     }) {
@@ -19,6 +20,7 @@ module.exports = class Game {
             throw new TypeError(`status must be a valid GameStatus. Provided value: ${status}`);
         }
         ac.assertNumber(currentBlackCard, 'currentBlackCard');
+        ac.assertNumber(lastBlackCard, 'lastBlackCard');
         ac.assertNumber(lastTsarSelection, 'lastTsarSelection');
         ac.assertNumber(lastWinnerPlayerIndex, 'lastWinnerPlayerIndex');
         ac.assertArrayOf(whiteCardDeck, Number, 'whiteCardDeck');
@@ -30,6 +32,7 @@ module.exports = class Game {
         this.whiteCardDeck = whiteCardDeck;
         this.blackCardDeck = blackCardDeck;
         this.currentBlackCard = currentBlackCard;
+        this.lastBlackCard = lastBlackCard;
         this.lastTsarSelection = lastTsarSelection;
         this.lastWinnerPlayerIndex = lastWinnerPlayerIndex;
     }

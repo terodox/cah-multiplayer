@@ -33,6 +33,10 @@ export namespace Components {
         "history": RouterHistory;
         "match": MatchResults;
     }
+    interface RevealWinningCardPage {
+        "history": RouterHistory;
+        "match": MatchResults;
+    }
     interface WhiteCard {
         "selected": boolean;
         "text": string;
@@ -87,6 +91,12 @@ declare global {
         prototype: HTMLPlayerPageElement;
         new (): HTMLPlayerPageElement;
     };
+    interface HTMLRevealWinningCardPageElement extends Components.RevealWinningCardPage, HTMLStencilElement {
+    }
+    var HTMLRevealWinningCardPageElement: {
+        prototype: HTMLRevealWinningCardPageElement;
+        new (): HTMLRevealWinningCardPageElement;
+    };
     interface HTMLWhiteCardElement extends Components.WhiteCard, HTMLStencilElement {
     }
     var HTMLWhiteCardElement: {
@@ -102,6 +112,7 @@ declare global {
         "game-page": HTMLGamePageElement;
         "main-game-page": HTMLMainGamePageElement;
         "player-page": HTMLPlayerPageElement;
+        "reveal-winning-card-page": HTMLRevealWinningCardPageElement;
         "white-card": HTMLWhiteCardElement;
     }
 }
@@ -131,6 +142,10 @@ declare namespace LocalJSX {
         "history"?: RouterHistory;
         "match"?: MatchResults;
     }
+    interface RevealWinningCardPage {
+        "history"?: RouterHistory;
+        "match"?: MatchResults;
+    }
     interface WhiteCard {
         "selected"?: boolean;
         "text"?: string;
@@ -144,6 +159,7 @@ declare namespace LocalJSX {
         "game-page": GamePage;
         "main-game-page": MainGamePage;
         "player-page": PlayerPage;
+        "reveal-winning-card-page": RevealWinningCardPage;
         "white-card": WhiteCard;
     }
 }
@@ -159,6 +175,7 @@ declare module "@stencil/core" {
             "game-page": LocalJSX.GamePage & JSXBase.HTMLAttributes<HTMLGamePageElement>;
             "main-game-page": LocalJSX.MainGamePage & JSXBase.HTMLAttributes<HTMLMainGamePageElement>;
             "player-page": LocalJSX.PlayerPage & JSXBase.HTMLAttributes<HTMLPlayerPageElement>;
+            "reveal-winning-card-page": LocalJSX.RevealWinningCardPage & JSXBase.HTMLAttributes<HTMLRevealWinningCardPageElement>;
             "white-card": LocalJSX.WhiteCard & JSXBase.HTMLAttributes<HTMLWhiteCardElement>;
         }
     }

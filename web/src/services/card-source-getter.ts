@@ -29,7 +29,7 @@ export class CardSourceService {
     axiosRetry(axios);
   }
 
-  static getInstance() {
+  static getInstance(): CardSourceService {
     if(!_instance) {
       _instance = new CardSourceService(window.appConfig.apiBaseUrl, SAFETY);
     }
