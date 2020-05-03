@@ -56,6 +56,17 @@ export class GameRepository {
     throw new Error('Player has not been set yet');
   }
 
+  async nextRound({ gameId }) {
+    await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(gameId)}`, {
+      status: GameStatus.WAITING_FOR_CARDS
+    }, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   async setSelectedPlayerCard({ gameId, playerId, selectedCard}) {
     await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/players/${encodeURIComponent(playerId)}`, {
       selectedCard: selectedCard
@@ -69,7 +80,7 @@ export class GameRepository {
 
 
   async setTsarSelectedCard({ gameId, selectedCard}) {
-    await axios.post(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/tsar-selection}`, {
+    await axios.post(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/tsar-selection`, {
       cardId: selectedCard
     }, {
       responseType: 'json',

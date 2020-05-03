@@ -5,6 +5,7 @@ import { Game } from '../../models/game';
 import { CardSourceService, BlackCard } from '../../services/card-source-getter';
 import { Player, NONE } from '../../models/player';
 import { GameStatus } from '../../models/game-status';
+import { RevealWinningCardPage } from '../reveal-winning-card-page/reveal-winning-card-page';
 
 @Component({
   tag: 'main-game-page',
@@ -26,6 +27,7 @@ export class MainGamePage implements ComponentInterface {
   @State() tsarSelectedCard: string;
 
   private cardSourceService: CardSourceService;
+  private _refreshInterval: any;
 
   static get route() {
     return `/games/:gameId/players/:playerId/playing`;
@@ -47,7 +49,8 @@ export class MainGamePage implements ComponentInterface {
     this.game = await GameRepository.getInstance().getOrAddGame(this.gameId);
 
     if(this.game.status === GameStatus.REVEALING_WINNING_CARD) {
-      this.history.replace('/');
+      const revealRoute = RevealWinningCardPage.getRoute(this.gameId, this.playerId);
+      this.history.replace(revealRoute, {});
     }
 
     this.player = this.game.players.find(player => player.name === this.playerId);
@@ -72,6 +75,12 @@ export class MainGamePage implements ComponentInterface {
     this.gameId = this.match.params.gameId;
     this.playerId = this.match.params.playerId;
     await this._refreshGameState();
+
+    this._refreshInterval = setInterval(() => this._refreshGameState(), 2000);
+  }
+
+  disconnectedCallback() {
+    clearInterval(this._refreshInterval);
   }
 
   async chooseTsarSelectedCard() {
@@ -153,16 +162,18 @@ export class MainGamePage implements ComponentInterface {
               Choose selected card
             </button>
           :
-          <div class="player-card-container">
-            <h2>Your Cards</h2>
-            <div class="player-cards">
-              {this.playerCards.map(whiteCard => <white-card
-                text={whiteCard}
-                onClick={() => this.selectCard(whiteCard)}
-                selected={this.selectedCard === whiteCard}
-              ></white-card>)}
+          this.game.status === GameStatus.WAITING_FOR_CARDS ?
+            <div class="player-card-container">
+              <h2>Your Cards</h2>
+              <div class="player-cards">
+                {this.playerCards.map(whiteCard => <white-card
+                  text={whiteCard}
+                  onClick={() => this.selectCard(whiteCard)}
+                  selected={this.selectedCard === whiteCard}
+                ></white-card>)}
+              </div>
             </div>
-          </div>
+            : <h2>Waiting for card tsar to choose...</h2>
         }
       </Host>);
     } else {

@@ -59,7 +59,7 @@ export class GameLobbyPage implements ComponentInterface {
     console.log('Players', this.game.players);
 
     clearTimeout(this._checkTimer);
-    this._checkTimer = setTimeout(() => this.checkForMorePlayers(), 5000);
+    this._checkTimer = setTimeout(() => this.checkForMorePlayers(), 2000);
 
     return (
       <Host>

@@ -25,6 +25,16 @@ module.exports = async function gamesGet(ctx, gameId) {
             game.lastWinnerPlayerIndex = game.players.indexOf(winningPlayer);
             game.status = GameStatus.REVEALING_WINNING_CARD;
 
+            //Rotate card tsar
+            const currentTsar = game.players.find(player => player.isCardTsar);
+            const tsarIndex = game.players.indexOf(currentTsar);
+            game.players.forEach(player => player.isCardTsar = false);
+            if(tsarIndex + 1 >= game.players.length) {
+                game.players[0].isCardTsar = true;
+            } else {
+                game.players[tsarIndex + 1].isCardTsar = true;
+            }
+
             //Deal new cards to each player
             game.players.forEach(player => {
                 if(player.selectedCard !== -1) {
@@ -38,6 +48,7 @@ module.exports = async function gamesGet(ctx, gameId) {
             });
 
             // Select new black card
+            game.lastBlackCard = game.currentBlackCard;
             game.currentBlackCard = game.blackCardDeck.shift();
 
             await collection.updateOne({
