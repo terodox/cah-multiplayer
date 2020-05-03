@@ -24,3 +24,12 @@ reveal-winning-card-page {
     }
   }
 }
+
+@media(max-width: 600px) {
+  reveal-winning-card-page {
+    .winning-card {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

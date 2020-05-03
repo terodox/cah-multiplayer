@@ -73,6 +73,7 @@ export class RevealWinningCardPage implements ComponentInterface {
         - winning player name
         - Leader board
     */
+   // TODO phone layout
     return (
       <Host>
         {

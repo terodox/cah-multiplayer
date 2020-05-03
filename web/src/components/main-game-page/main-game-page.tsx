@@ -133,6 +133,7 @@ export class MainGamePage implements ComponentInterface {
   }
 
   render() {
+    // TODO revealed cards need phone layout update
     if(this.game) {
       return (<Host>
         <h1>{this.gameId}</h1>
