@@ -10,6 +10,8 @@ export class Game {
     public whiteCardDeck: Array<number>;
     public blackCardDeck: Array<number>;
     public currentBlackCard: number;
+    public lastTsarSelection: number;
+    public lastWinnerPlayerIndex: number;
 
     constructor({
         name,
@@ -18,12 +20,16 @@ export class Game {
         currentBlackCard = -1,
         whiteCardDeck = [],
         blackCardDeck = [],
+        lastTsarSelection = -1,
+        lastWinnerPlayerIndex = -1,
     }) {
         ac.assertString(name, 'name');
         if(!GameStatus.isValid(status)) {
             throw new TypeError(`status must be a valid GameStatus. Provided value: ${status}`);
         }
         ac.assertNumber(currentBlackCard, 'currentBlackCard');
+        ac.assertNumber(lastTsarSelection, 'lastTsarSelection');
+        ac.assertNumber(lastWinnerPlayerIndex, 'lastWinnerPlayerIndex');
         ac.assertArrayOf(whiteCardDeck, Number, 'whiteCardDeck');
         ac.assertArrayOf(blackCardDeck, Number, 'blackCardDeck');
 
@@ -33,5 +39,7 @@ export class Game {
         this.whiteCardDeck = whiteCardDeck;
         this.blackCardDeck = blackCardDeck;
         this.currentBlackCard = currentBlackCard;
+        this.lastTsarSelection = lastTsarSelection;
+        this.lastWinnerPlayerIndex = lastWinnerPlayerIndex;
     }
 }

@@ -23,6 +23,7 @@ export class MainGamePage implements ComponentInterface {
   @State() playerCards: Array<string>;
   @State() selectedCard: string;
   @State() otherPeopleSelections: Array<string> = [];
+  @State() tsarSelectedCard: string;
 
   private cardSourceService: CardSourceService;
 
@@ -44,6 +45,11 @@ export class MainGamePage implements ComponentInterface {
 
   private async _refreshGameState() {
     this.game = await GameRepository.getInstance().getOrAddGame(this.gameId);
+
+    if(this.game.status === GameStatus.REVEALING_WINNING_CARD) {
+      this.history.replace('/');
+    }
+
     this.player = this.game.players.find(player => player.name === this.playerId);
     this.blackCard = await this.cardSourceService.getBlackCard(this.game.currentBlackCard);
     console.log('Player cards:', this.player.cards);
@@ -68,6 +74,37 @@ export class MainGamePage implements ComponentInterface {
     await this._refreshGameState();
   }
 
+  async chooseTsarSelectedCard() {
+    if(!this.tsarSelectedCard) {
+      window.alert('Choose a card first!');
+    }
+    const playersAndSelections = await Promise.all(
+      this.game.players
+        .filter(player => player.selectedCard !== NONE)
+        .map(async player => {
+          return {
+            card: await this.cardSourceService.getWhiteCard(player.selectedCard),
+            player,
+          };
+        })
+    );
+
+    const playerAndSelection = playersAndSelections.find(pas => pas.card === this.tsarSelectedCard);
+    const tsarSelectedCardId = playerAndSelection.player.selectedCard;
+
+    await GameRepository.getInstance().setTsarSelectedCard({
+      gameId: this.gameId,
+      selectedCard: tsarSelectedCardId
+    });
+
+
+  }
+
+  async revealChoices() {
+    await GameRepository.getInstance().revealCardTsarChoices();
+    await this._refreshGameState();
+  }
+
   async selectCard(card) {
     this.selectedCard = card;
     const cardIndex = this.playerCards.indexOf(card);
@@ -82,6 +119,10 @@ export class MainGamePage implements ComponentInterface {
     await this._refreshGameState();
   }
 
+  selectTsarCard(card) {
+    this.tsarSelectedCard = card;
+  }
+
   render() {
     if(this.game) {
       return (<Host>
@@ -94,20 +135,35 @@ export class MainGamePage implements ComponentInterface {
                 <white-card text={`Waiting for player selections. Total submitted: ${this.otherPeopleSelections.length}`}></white-card>
               :
               this.otherPeopleSelections.map(card => card ?
-                <white-card text={card}></white-card> : '')
+                <white-card
+                  text={card}
+                  onClick={() => this.selectTsarCard(card)}
+                  selected={this.tsarSelectedCard === card}
+                ></white-card> : '')
             }
           </div>
         </div>
-        <div class="player-card-container">
-          <h2>Your Cards</h2>
-          <div class="player-cards">
-            {this.playerCards.map(whiteCard => <white-card
-              text={whiteCard}
-              onClick={() => this.selectCard(whiteCard)}
-              selected={this.selectedCard === whiteCard}
-            ></white-card>)}
+        { this.player.isCardTsar ?
+          this.game.status === GameStatus.WAITING_FOR_CARDS ?
+            <button class="btn btn-primary" onClick={() => this.revealChoices()}>
+              Reveal cards
+            </button>
+            :
+            <button class="btn btn-primary" onClick={() => this.chooseTsarSelectedCard()}>
+              Choose selected card
+            </button>
+          :
+          <div class="player-card-container">
+            <h2>Your Cards</h2>
+            <div class="player-cards">
+              {this.playerCards.map(whiteCard => <white-card
+                text={whiteCard}
+                onClick={() => this.selectCard(whiteCard)}
+                selected={this.selectedCard === whiteCard}
+              ></white-card>)}
+            </div>
           </div>
-        </div>
+        }
       </Host>);
     } else {
       return (

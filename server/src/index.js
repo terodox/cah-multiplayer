@@ -30,6 +30,7 @@ app.use(route.get('/games/:gameid', require('./games-get')));
 app.use(route.get('/games/:gameid/players/:playerid', require('./players-get')));
 app.use(route.patch('/games/:gameid/players/:playerid', require('./players-patch')));
 app.use(route.patch('/games/:gameid', require('./games-patch')));
+app.use(route.post('/games/:gameid/tsar-selection', require('./tsar-selection-post')));
 
 const port = process.env.PORT || 80;
 app.listen(port);

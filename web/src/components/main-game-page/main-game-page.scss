@@ -11,6 +11,11 @@ main-game-page {
   .others-cards-container {
     display: flex;
     flex-direction: row;
+
+    .other-people-selections {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   .player-card-container {

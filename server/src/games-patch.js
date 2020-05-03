@@ -10,15 +10,8 @@ module.exports = async function gamesGet(ctx, gameId) {
         let result = await collection.find({ name: gameId }).toArray();
         console.log('Get result', result);
 
-        let game;
         if(result.length === 0) {
             ctx.status = 404;
-            return;
-        } else if (result[0].status !== GameStatus.WAITING_FOR_PLAYERS) {
-            ctx.status = 400;
-            ctx.body = {
-                message: 'Game has already been started'
-            };
             return;
         } else {
             const gameFromDb = result[0];
@@ -32,6 +25,13 @@ module.exports = async function gamesGet(ctx, gameId) {
             })
 
             if(game.status === GameStatus.STARTING_GAME) {
+                if (result[0].status !== GameStatus.WAITING_FOR_PLAYERS) {
+                    ctx.status = 400;
+                    ctx.body = {
+                        message: 'Game has already been started'
+                    };
+                    return;
+                }
                 // Game initialization!
                 console.log('STARTING GAME:', game.name);
                 const indexArrayOfWhiteCards = Array.apply(null, {length: cardData.whiteCards.length}).map(Number.call, Number);

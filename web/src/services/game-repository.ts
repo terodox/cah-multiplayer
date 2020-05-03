@@ -2,6 +2,7 @@ import axios from 'axios';
 import axiosRetry from 'axios-retry';
 import { Game } from '../models/game';
 import { Player } from '../models/player';
+import { GameStatus } from '../models/game-status';
 
 const SAFETY = Symbol('Private Ctor');
 let _instance;
@@ -66,9 +67,32 @@ export class GameRepository {
     });
   }
 
+
+  async setTsarSelectedCard({ gameId, selectedCard}) {
+    await axios.post(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/tsar-selection}`, {
+      cardId: selectedCard
+    }, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  async revealCardTsarChoices() {
+    await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(this._currentGameId)}`, {
+      status: GameStatus.WAITING_FOR_TSAR_SELECTION
+    }, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   async startGame() {
     await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(this._currentGameId)}`, {
-      status: 'STARTING_GAME'
+      status: GameStatus.STARTING_GAME
     }, {
       responseType: 'json',
       headers: {
