@@ -142,7 +142,7 @@ export class MainGamePage implements ComponentInterface {
             {
               this.game.status === GameStatus.WAITING_FOR_CARDS ?
                 <white-card text={`Waiting for player selections.
-                Waiting on ${this.game.players.length - this.otherPeopleSelections.length} players`}></white-card>
+                Waiting on ${this.game.players.length - this.otherPeopleSelections.length - 1} players`}></white-card>
               :
               this.otherPeopleSelections.map(card => card ?
                 <white-card
