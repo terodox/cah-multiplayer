@@ -133,7 +133,6 @@ export class MainGamePage implements ComponentInterface {
   }
 
   render() {
-    // TODO revealed cards need phone layout update
     if(this.game) {
       return (<Host>
         <h1>{this.gameId}</h1>
@@ -142,7 +141,8 @@ export class MainGamePage implements ComponentInterface {
           <div class="other-people-selections">
             {
               this.game.status === GameStatus.WAITING_FOR_CARDS ?
-                <white-card text={`Waiting for player selections. Total submitted: ${this.otherPeopleSelections.length}`}></white-card>
+                <white-card text={`Waiting for player selections.
+                Waiting on ${this.game.players.length - this.otherPeopleSelections.length} players`}></white-card>
               :
               this.otherPeopleSelections.map(card => card ?
                 <white-card

@@ -57,7 +57,7 @@ export class RevealWinningCardPage implements ComponentInterface {
       });
     setTimeout(() => {
       this.showNextRoundButton = true;
-    }, 10000);
+    }, 5);
   }
 
   async backToMainGamePage() {
@@ -73,7 +73,6 @@ export class RevealWinningCardPage implements ComponentInterface {
         - winning player name
         - Leader board
     */
-   // TODO phone layout
     return (
       <Host>
         {
