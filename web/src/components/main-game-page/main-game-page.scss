@@ -36,15 +36,16 @@ main-game-page {
   }
 }
 
-@media(max-width: 600px) {
+@media(max-width: 900px) {
   main-game-page {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-
     .others-cards-container {
       display: flex;
       flex-direction: column;
+
+      .other-people-selections {
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     .player-card-container {
