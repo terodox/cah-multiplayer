@@ -43,8 +43,8 @@ module.exports = async function gamesGet(ctx, gameId) {
                         player.cards.splice(index, 1);
                     }
                     player.selectedCard = -1;
+                    player.cards.push(game.whiteCardDeck.shift());
                 }
-                player.cards.push(game.whiteCardDeck.shift());
             });
 
             // Select new black card
