@@ -7,6 +7,31 @@ import { Player, NONE } from '../../models/player';
 import { GameStatus } from '../../models/game-status';
 import { RevealWinningCardPage } from '../reveal-winning-card-page/reveal-winning-card-page';
 
+function shuffle(passedArray, isCardTsar) {
+  if(!isCardTsar) {
+    return passedArray;
+  }
+
+  let counter = passedArray.length * 3;
+
+  const array = [
+      ...passedArray
+  ];
+
+  while (counter > 0) {
+      let index = Math.floor(Math.random() * counter);
+
+      counter--;
+
+      // Do not use destructuring - performance impact
+      let temp = array[counter];
+      array[counter] = array[index];
+      array[index] = temp;
+  }
+
+  return array;
+}
+
 @Component({
   tag: 'main-game-page',
   styleUrl: 'main-game-page.scss',
@@ -64,8 +89,8 @@ export class MainGamePage implements ComponentInterface {
     console.log(this.player.selectedCard, this.selectedCard);
 
     this.otherPeopleSelections = await Promise.all(
-      this.game.players
-        .filter(player => player.selectedCard !== NONE)
+      shuffle(this.game.players
+        .filter(player => player.selectedCard !== NONE), this.player.isCardTsar)
         .map(async player => await this.cardSourceService.getWhiteCard(player.selectedCard))
     );
   }

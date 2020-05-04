@@ -25,7 +25,7 @@ Secondary goals:
 
 Defects:
 
-- [ ] Cards shown to tsar should be in a randomized order
+- [x] Cards shown to tsar should be in a randomized order
 - [x] After being card tsar hand size is increased by 1
 - [x] HTML escaping on cards
 - [x] Only show Pick 1 cards for now
@@ -34,6 +34,6 @@ Feature requests:
 
 - [ ] Card Tsar can skip black card
 - [ ] Display who the card tsar is
+- [ ] Option for players to mulligan their entire hand of cards.
 - [ ] Only allow card tsar to move to next round
 - [ ] Better visibility of who is the card tsar
-- [ ] Option for players to mulligan their entire hand of cards.
