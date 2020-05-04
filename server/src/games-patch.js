@@ -36,7 +36,9 @@ module.exports = async function gamesGet(ctx, gameId) {
                 console.log('STARTING GAME:', game.name);
                 const indexArrayOfWhiteCards = Array.apply(null, {length: cardData.whiteCards.length}).map(Number.call, Number);
                 const whiteDeck = shuffle(indexArrayOfWhiteCards);
-                const indexArrayOfBlackCards = Array.apply(null, {length: cardData.blackCards.length}).map(Number.call, Number);
+                // Only allow pick 1 cards for now
+                const blackCards = cardData.blackCards.filter(card => card.pick === 1);
+                const indexArrayOfBlackCards = Array.apply(null, {length: blackCards.length}).map(Number.call, Number);
                 const blackDeck = shuffle(indexArrayOfBlackCards);
                 game.players.forEach(player => {
                     // Distribute 7 random cards to each player

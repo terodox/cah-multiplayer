@@ -28,7 +28,7 @@ Defects:
 - [ ] Cards shown to tsar should be in a randomized order
 - [ ] After being card tsar hand size is increased by 1
 - [ ] HTML escaping on cards
-- [ ] Only show Pick 1 cards for now
+- [x] Only show Pick 1 cards for now
 
 Feature requests:
 

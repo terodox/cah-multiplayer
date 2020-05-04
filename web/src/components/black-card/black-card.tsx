@@ -11,14 +11,13 @@ import { BlackCard } from '../../services/card-source-getter';
 export class BlackCardComponent implements ComponentInterface {
   @Prop() card: BlackCard;
 
-
   render() {
     const updatedText = unescapeHtml(this.card.text).replace('_', '______');
     return (
       <Host>
         <div class="card black-card">
           <div class="card-header">
-            <div class="card-title h5">{updatedText}</div>
+            <div class="card-title h5" innerHTML={updatedText}></div>
           </div>
           <div class="card-footer">Pick {this.card.pick}</div>
         </div>

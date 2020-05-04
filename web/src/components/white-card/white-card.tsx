@@ -19,7 +19,7 @@ export class WhiteCard implements ComponentInterface {
     return (
       <Host class={`card ${selectedStyle}`}>
         <div class="card-header">
-          <div class="card-title h5">{unescapeHtml(this.text)}</div>
+          <div class="card-title h5" innerHTML={unescapeHtml(this.text)}></div>
         </div>
       </Host>
     );
