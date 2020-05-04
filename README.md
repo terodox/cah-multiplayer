@@ -23,6 +23,8 @@ Secondary goals:
 - [x] Avatars for players
 - [x] No host required
 
+## 2020-05-04
+
 Defects:
 
 - [x] Cards shown to tsar should be in a randomized order
@@ -35,5 +37,5 @@ Feature requests:
 - [ ] Card Tsar can skip black card
 - [ ] Display who the card tsar is
 - [ ] Option for players to mulligan their entire hand of cards.
-- [ ] Only allow card tsar to move to next round
+- ~Only allow card tsar to move to next round~ Voted down
 - [ ] Better visibility of who is the card tsar
