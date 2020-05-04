@@ -38,6 +38,11 @@ main-game-page {
 
 @media(max-width: 900px) {
   main-game-page {
+
+    .card-tsar {
+      font-style: italic;
+    }
+
     .others-cards-container {
       display: flex;
       flex-direction: column;

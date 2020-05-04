@@ -35,7 +35,7 @@ Defects:
 Feature requests:
 
 - [ ] Card Tsar can skip black card
-- [ ] Display who the card tsar is
+- [x] Display who the card tsar is
 - [ ] Option for players to mulligan their entire hand of cards.
-- ~Only allow card tsar to move to next round~ Voted down
 - [ ] Better visibility of who is the card tsar
+- ~Only allow card tsar to move to next round~ Voted down
