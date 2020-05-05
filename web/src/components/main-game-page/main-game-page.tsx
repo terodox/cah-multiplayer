@@ -161,7 +161,11 @@ export class MainGamePage implements ComponentInterface {
     if(this.game) {
       const cardTsarName = (this.game.players.find(player => player.isCardTsar)).name;
       return (<Host>
-        <h1>Card Tsar is <span class="card-tsar">{cardTsarName}</span></h1>
+        {this.player.name === cardTsarName ?
+          <h1 class="you-are-the-card-tsar">YOU ARE THE CARD TSAR!</h1>
+        :
+          <h1>Card Tsar is <span class="card-tsar">{cardTsarName}</span></h1>
+        }
         <div class="others-cards-container">
           <black-card card={this.blackCard as any}></black-card>
           <div class="other-people-selections">

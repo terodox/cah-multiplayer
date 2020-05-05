@@ -8,6 +8,43 @@ main-game-page {
   flex-direction: column;
   height: 200vh;
 
+  .you-are-the-card-tsar {
+    -webkit-animation: color-change 1s infinite;
+    -moz-animation: color-change 1s infinite;
+    -o-animation: color-change 1s infinite;
+    -ms-animation: color-change 1s infinite;
+    animation: color-change 1s infinite;
+  }
+
+  $start-and-end-color: #9000ff;
+  $middle-color: #ff00ee;
+
+  @-webkit-keyframes color-change {
+      0% { color: $start-and-end-color; }
+      50% { color: $middle-color; }
+      100% { color: $start-and-end-color; }
+  }
+  @-moz-keyframes color-change {
+      0% { color: $start-and-end-color; }
+      50% { color: $middle-color; }
+      100% { color: $start-and-end-color; }
+  }
+  @-ms-keyframes color-change {
+      0% { color: $start-and-end-color; }
+      50% { color: $middle-color; }
+      100% { color: $start-and-end-color; }
+  }
+  @-o-keyframes color-change {
+      0% { color: $start-and-end-color; }
+      50% { color: $middle-color; }
+      100% { color: $start-and-end-color; }
+  }
+  @keyframes color-change {
+      0% { color: $start-and-end-color; }
+      50% { color: $middle-color; }
+      100% { color: $start-and-end-color; }
+  }
+
   .others-cards-container {
     display: flex;
     flex-direction: row;
@@ -38,7 +75,6 @@ main-game-page {
 
 @media(max-width: 900px) {
   main-game-page {
-
     .card-tsar {
       font-style: italic;
     }
