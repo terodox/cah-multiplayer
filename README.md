@@ -38,5 +38,5 @@ Feature requests:
 - [x] Display who the card tsar is
 - [ ] Option for players to mulligan their entire hand of cards.
 - [x] Better visibility of who is the card tsar
-- [ ] Show who won the round more prominently
+- [x] Show who won the round more prominently
 - ~Only allow card tsar to move to next round~ Voted down
