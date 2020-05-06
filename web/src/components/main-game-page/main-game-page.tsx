@@ -135,7 +135,8 @@ export class MainGamePage implements ComponentInterface {
       selectedCard: tsarSelectedCardId
     });
 
-    this._refreshGameState();
+    const revealRoute = RevealWinningCardPage.getRoute(this.gameId, this.playerId);
+    this.history.replace(revealRoute, {});
   }
 
   async revealChoices() {
