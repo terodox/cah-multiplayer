@@ -18,7 +18,7 @@ function shuffle(passedArray, isCardTsar) {
       ...passedArray
   ];
 console.log('Preshuffle', array);
-  while (counter > -10) {
+  while (counter > 0) {
       let index = Math.floor(Math.random() * counter);
 
       counter--;
@@ -93,6 +93,10 @@ export class MainGamePage implements ComponentInterface {
         .filter(player => player.selectedCard !== NONE)
         .map(async player => await this.cardSourceService.getWhiteCard(player.selectedCard))
     );
+
+    if(this.game.status === GameStatus.WAITING_FOR_TSAR_SELECTION && this.player.isCardTsar) {
+      clearInterval(this._refreshInterval);
+    }
   }
 
   async componentWillLoad() {
@@ -158,6 +162,7 @@ export class MainGamePage implements ComponentInterface {
   }
 
   render() {
+    console.log('Game status', this.game.status);
     if(this.game) {
       const cardTsarName = (this.game.players.find(player => player.isCardTsar)).name;
       return (<Host>
