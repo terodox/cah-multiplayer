@@ -135,7 +135,7 @@ export class MainGamePage implements ComponentInterface {
       selectedCard: tsarSelectedCardId
     });
 
-
+    this._refreshGameState();
   }
 
   async revealChoices() {
