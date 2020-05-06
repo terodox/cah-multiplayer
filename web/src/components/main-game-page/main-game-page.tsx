@@ -12,13 +12,13 @@ function shuffle(passedArray, isCardTsar) {
     return passedArray;
   }
 
-  let counter = passedArray.length * 3;
+  let counter = passedArray.length;
 
   const array = [
       ...passedArray
   ];
-
-  while (counter > 0) {
+console.log('Preshuffle', array);
+  while (counter > -10) {
       let index = Math.floor(Math.random() * counter);
 
       counter--;
@@ -28,7 +28,7 @@ function shuffle(passedArray, isCardTsar) {
       array[counter] = array[index];
       array[index] = temp;
   }
-
+console.log('After shuffle', array);
   return array;
 }
 
@@ -89,8 +89,8 @@ export class MainGamePage implements ComponentInterface {
     console.log(this.player.selectedCard, this.selectedCard);
 
     this.otherPeopleSelections = await Promise.all(
-      shuffle(this.game.players
-        .filter(player => player.selectedCard !== NONE), this.player.isCardTsar)
+      shuffle(this.game.players, this.player.isCardTsar)
+        .filter(player => player.selectedCard !== NONE)
         .map(async player => await this.cardSourceService.getWhiteCard(player.selectedCard))
     );
   }
