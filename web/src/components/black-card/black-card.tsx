@@ -12,7 +12,7 @@ export class BlackCardComponent implements ComponentInterface {
   @Prop() card: BlackCard;
 
   render() {
-    const updatedText = unescapeHtml(this.card.text).replace('_', '______');
+    const updatedText = unescapeHtml(this.card.text).replace(/_/g, '______');
     return (
       <Host>
         <div class="card black-card">

@@ -73,14 +73,13 @@ export class RevealWinningCardPage implements ComponentInterface {
         - winning player name
         - Leader board
     */
-   const lastWinningPlayerName = this.game.players[this.game.lastWinnerPlayerIndex].name;
     return (
       <Host>
         {
           this.game && this.blackCard && this.whiteCard  ?
           <div>
             <h3>
-              The chosen one is: {lastWinningPlayerName}
+              The chosen one is: {this.game.players[this.game.lastWinnerPlayerIndex].name}
             </h3>
             <div class="winning-card">
               <black-card card={this.blackCard as any}></black-card>
@@ -90,7 +89,7 @@ export class RevealWinningCardPage implements ComponentInterface {
               <h3>The Leaderboard</h3>
               <ul class="player-list">
                 {this.game.players.map(player => <li>
-                  <h4 class={player.name === lastWinningPlayerName ? 'winning-player' : ''}>
+                  <h4 class={player.name === this.game.players[this.game.lastWinnerPlayerIndex].name ? 'winning-player' : ''}>
                     <img class="avatar" src={getAvatar(36, player.name)} />
                     {player.name}: {player.points}
                   </h4>
