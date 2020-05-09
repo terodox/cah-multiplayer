@@ -56,6 +56,15 @@ export class GameRepository {
     throw new Error('Player has not been set yet');
   }
 
+  async getNewBlackCard(gameId) {
+    await axios.delete(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/black-card`, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   async nextRound({ gameId }) {
     await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(gameId)}`, {
       status: GameStatus.WAITING_FOR_CARDS

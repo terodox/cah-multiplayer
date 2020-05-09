@@ -139,6 +139,13 @@ export class MainGamePage implements ComponentInterface {
     this.history.replace(revealRoute, {});
   }
 
+  async getNewBlackCard() {
+    const response = window.confirm('Are you sure you want to get rid of this black card?');
+    if(response) {
+      await GameRepository.getInstance().getNewBlackCard(this.gameId);
+    }
+  }
+
   async mulliganHand() {
     const response = window.confirm('Are you sure you want to get rid of this hand?');
     if(response) {
@@ -198,9 +205,14 @@ export class MainGamePage implements ComponentInterface {
         </div>
         { this.player.isCardTsar ?
           this.game.status === GameStatus.WAITING_FOR_CARDS ?
-            <button class="btn btn-primary" onClick={() => this.revealChoices()}>
-              Reveal cards
-            </button>
+            [
+              <button class="btn btn-primary" onClick={() => this.revealChoices()}>
+                Reveal cards
+              </button>,
+              <button class="btn" onClick={() => this.getNewBlackCard()}>
+                FUCK THIS BLACK CARD! GIMME A NEW ONE!
+              </button>
+            ]
             :
             <button class="btn btn-primary" onClick={() => this.chooseTsarSelectedCard()}>
               Choose selected card
