@@ -36,7 +36,8 @@ module.exports = async function cardsDelete(ctx, gameId, playerId) {
         }, {
             $set: {
                 whiteCardDeck: updatedWhiteDeck,
-                [`players.${foundPlayerIndex}.cards`]: playerHand
+                [`players.${foundPlayerIndex}.cards`]: playerHand,
+                [`players.${foundPlayerIndex}.selectedCard`]: -1,
             }
         });
 
