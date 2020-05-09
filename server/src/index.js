@@ -27,6 +27,7 @@ app.use(async (ctx, next) => {
 app.use(route.get('/cards', require('./cards')));
 app.use(route.get('/cards/black/random', require('./cards-black-random')));
 app.use(route.get('/games/:gameid', require('./games-get')));
+app.use(route.delete('/games/:gameid/black-card', require('./black-card-delete')));
 app.use(route.get('/games/:gameid/players/:playerid', require('./players-get')));
 app.use(route.patch('/games/:gameid/players/:playerid', require('./players-patch')));
 app.use(route.delete('/games/:gameid/players/:playerid/cards', require('./cards-delete')));
