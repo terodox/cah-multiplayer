@@ -101,6 +101,15 @@ export class GameRepository {
     });
   }
 
+  async mulliganPlayerHand(gameId, playerId) {
+    await axios.delete(`${this._baseUrl}/games/${encodeURIComponent(gameId)}/players/${encodeURIComponent(playerId)}/cards`, {
+      responseType: 'json',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   async startGame() {
     await axios.patch(`${this._baseUrl}/games/${encodeURIComponent(this._currentGameId)}`, {
       status: GameStatus.STARTING_GAME

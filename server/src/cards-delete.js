@@ -23,7 +23,7 @@ module.exports = async function cardsDelete(ctx, gameId, playerId) {
             return;
         }
         const foundPlayerIndex = game.players.indexOf(foundPlayer);
-console.log('game.whiteCardDeck', game.whiteCardDeck);
+
         const {
             whiteDeck: updatedWhiteDeck,
             playerHand

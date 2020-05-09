@@ -139,6 +139,13 @@ export class MainGamePage implements ComponentInterface {
     this.history.replace(revealRoute, {});
   }
 
+  async mulliganHand() {
+    const response = window.confirm('Are you sure you want to get rid of this hand?');
+    if(response) {
+      await GameRepository.getInstance().mulliganPlayerHand(this.gameId, this.playerId);
+    }
+  }
+
   async revealChoices() {
     await GameRepository.getInstance().revealCardTsarChoices();
     await this._refreshGameState();
@@ -209,6 +216,7 @@ export class MainGamePage implements ComponentInterface {
                   selected={this.selectedCard === whiteCard}
                 ></white-card>)}
               </div>
+              <button class="btn" onClick={() => this.mulliganHand()} >This hand is trash. Get a new one now!</button>
             </div>
             : <h2>Waiting for card tsar to choose...</h2>
         }
