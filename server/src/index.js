@@ -29,6 +29,7 @@ app.use(route.get('/cards/black/random', require('./cards-black-random')));
 app.use(route.get('/games/:gameid', require('./games-get')));
 app.use(route.get('/games/:gameid/players/:playerid', require('./players-get')));
 app.use(route.patch('/games/:gameid/players/:playerid', require('./players-patch')));
+app.use(route.delete('/games/:gameid/players/:playerid/cards', require('./cards-delete')));
 app.use(route.patch('/games/:gameid', require('./games-patch')));
 app.use(route.post('/games/:gameid/tsar-selection', require('./tsar-selection-post')));
 

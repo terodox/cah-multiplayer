@@ -1,3 +1,4 @@
+const buildNewHandForPlayer = require('./build-new-hand-for-player');
 const Game = require('./models/game');
 const GameStatus = require('./models/game-status');
 const cardData = require('./card-data.json');
@@ -35,22 +36,21 @@ module.exports = async function gamesGet(ctx, gameId) {
                 // Game initialization!
                 console.log('STARTING GAME:', game.name);
                 const indexArrayOfWhiteCards = Array.apply(null, {length: cardData.whiteCards.length}).map(Number.call, Number);
-                const whiteDeck = shuffle(indexArrayOfWhiteCards);
+                let whiteDeck = shuffle(indexArrayOfWhiteCards);
                 // Only allow pick 1 cards for now
                 const blackCards = cardData.blackCards.filter(card => card.pick === 1);
                 const indexArrayOfBlackCards = Array.apply(null, {length: blackCards.length}).map(Number.call, Number);
                 const blackDeck = shuffle(indexArrayOfBlackCards);
                 game.players.forEach(player => {
                     // Distribute 7 random cards to each player
-                    console.log('White card deck length:', game.whiteCardDeck.length);
-                    const playerHand = [];
-                    for(let cardCounter = 0; cardCounter < 7; cardCounter++) {
-                        const selectedCard = whiteDeck.shift();
-                        console.log('Selected card:', selectedCard);
-                        playerHand.push(selectedCard);
-                    }
+                    const {
+                        whiteDeck: updatedWhiteDeck,
+                        playerHand
+                    } = buildNewHandForPlayer({ whiteDeck });
+
                     console.log('Distributed white cards:', player.name, player.cards);
                     player.cards = playerHand;
+                    whiteDeck = updatedWhiteDeck;
                 });
 
                 // Select a black card

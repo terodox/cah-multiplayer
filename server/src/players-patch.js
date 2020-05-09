@@ -57,7 +57,7 @@ module.exports = async function playersGet(ctx, gameId, playerId) {
                 $set: {
                     [`players.${foundPlayerIndex}`]: updatedPlayer
                 }
-            })
+            });
         } else {
             ctx.status = 404;
             return;
