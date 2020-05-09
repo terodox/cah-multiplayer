@@ -20,7 +20,6 @@ export class RevealWinningCardPage implements ComponentInterface {
   @State() game: Game;
   @State() blackCard: BlackCard;
   @State() whiteCard: string;
-  @State() showNextRoundButton: boolean = false;
 
   static get route() {
     return '/games/:gameId/players/:playerId/reveal-winning-card';
@@ -55,9 +54,6 @@ export class RevealWinningCardPage implements ComponentInterface {
         console.log('Black card:', this.blackCard);
         console.log('White card:', this.whiteCard);
       });
-    setTimeout(() => {
-      this.showNextRoundButton = true;
-    }, 5);
   }
 
   async backToMainGamePage() {
@@ -96,10 +92,7 @@ export class RevealWinningCardPage implements ComponentInterface {
                 </li>)}
               </ul>
             </div>
-            { this.showNextRoundButton ?
-              <button class="btn primary-btn" onClick={() => this.backToMainGamePage()}>On to the next round!</button>
-              : ''
-            }
+            <button class="btn primary-btn" onClick={() => this.backToMainGamePage()}>On to the next round!</button>
           </div>
           :
           <h3>Loading...</h3>
